@@ -1,0 +1,32 @@
+database structure
+
+instance
+-container(cdb)
+--container(pdb)->instance/cdb
+
+db-cdb/pdb?
+
+cdb-(pdb,pdb,pdb)
+instance(orcl)-(orclpdb)
+
+using pl commands (show), no need for semicolons
+using sql commands (DML,DDL), use semicolon
+
+create and manage database
+dbca
+
+EC Connect
+sqlplus / as sysdba
+sqlplus oracle/123@//localhost:1521/pdb1
+connect oracle/123@//localhost:1521/pdb1
+
+
+Oracle NET Services: (server-server)
+sqlplus oracle/123@pdb1 as sysdba
+connect oracle/123@pdb1
+TNS (transparent network service)
+<oracle home>/network/admin/tnsnames.ora
+dbname + ip + port
+
+
+

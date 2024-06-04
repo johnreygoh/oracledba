@@ -1,0 +1,184 @@
+instance
+-startup/shutdown
+
+*each instance = parameter file
+2 types:
+pfile	text file (initORCL.ora) home/database/initORCL.ora	
+spfile	binary file (spfileORCL.ora) home/database/spfileORCL.ora
+pfile	text file (initORCL.ora) home/dbs/init.ora	
+custom pfile
+
+instance
+1. spfile->pfile->default pfile
+
+pfile (temp) - require restart
+spfile (permanent) - not require restart
+
+shutdown
+shutdown abort
+shutdown immediate
+
+
+----------------------------------------------------
+instance=spfile
+instnace=custom pfile
+
+1. create a pfile
+
+a. create from default init.ora
+b. create from spfile
+CREATE PFILE='C:\oracle\admin\initORCL.ora' FROM SPFILE;
+
+
+
+2. startup pfile=?
+------------------------------------------------------
+
+oracle net services
+
+1. oracle cluster "grid infrastructure"
+
+	ORACLE RAC REAL APPLICATION CLUSTER
+	s1------s2------s3
+
+load balancing,
+rerouting
+
+2. network communicating over the network
+
+oracle database server(linux server) <---------- client machine
+	connects to compute node
+	a. if windows remote desktop control
+	b. if linux ssh
+	c. if linux has gui, xrdp
+	d. teamviewer
+
+	connect directly to oracle database (oracle net service)
+	*listener (server),  lsnrctl start, service:listener, listener.ora
+	*tnsname (client), tnsname.ora
+
+oracle database(pc1)<---------------------------(install oracle client)pc2
+listener:					ec connect 
+10.12.104.67(thinley)				sqlplus sys/123@//10.12.104.67:1521/pdb1 as sysdba
+192.168.68.218(karma)
+192.168.68.219(sonom)
+40.121.132.137(john) -------- cloud
+
+firewall (1521)
+
+ec connect:
+sqlplus sys/123@//40.121.132.137:1521/testpdb1 as sysdba
+sqlplus sys/password$123@//192.168.68.219:1521/testpdb1 as sysdba
+
+sqlplus sys/123@johntestpdb1 as sysdba
+--------------------------------------------------------
+
+tnsnames.ora
+listener.ora
+
+--------------------------------------------------------
+
+data dictionary tables
+
+dba_tables
+all_tables
+user_tables
+
+dba_users
+dba_sys_privs
+dba_tab_privs
+dba_role_privs
+dba_profiles
+
+1. create users
+cdb (CDB$ROOT)
+	c##user1
+pdb
+	user1
+
+------------------------------------------------
+set user = sys
+
+roles:
+	sysdba
+privilege:
+	connect
+	resource
+	create session
+
+karma = privilege?role?
+
+dba_sys_privs
+dba_tab_privs
+dba_role_privs
+
+-----------------------------------------------------
+column profile format a30;
+column resource_name format a30;
+column limit format a30;
+set linesize 200;
+--to check the setting for each profile
+select profile, resource_name, limit from dba_profiles;
+
+
+column username format a30;
+column profile format a30;
+--check profile of karma
+select username,profile from dba_users where username='KARMA';
+
+
+--create new profile
+--check if profile is created
+--assign profile to user
+--check if profile is assigned
+------------------------------------
+
+cdb
+pdb
+
+sqlplus
+create pluggable database .....
+dbca
+
+response file (db.rsp)
+
+----------------------------------
+
+install instance 
+	(orclpdb) -> db.rsp
+	(testpdb1) -> testpdb1.rsp
+	(testpdb2) -> testpdb2.rsp
+
+1. dbca -silent -responseFile c:\testpdb1.rsp
+2. clone pdb from me to you
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
